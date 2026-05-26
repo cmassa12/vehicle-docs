@@ -108,17 +108,17 @@
 
         <div class="info-section">
             <div class="info-label">Agent Name</div>
-            <div class="info-value">[AGENT NAME HERE]</div>
+            <div class="info-value">[Mike Jones]</div>
         </div>
 
         <div class="info-section">
             <div class="info-label">Agent Phone</div>
-            <div class="info-value agent-phone">[AGENT PHONE HERE]</div>
+            <div class="info-value agent-phone">[555-555-5555]</div>
         </div>
 
         <div class="info-section">
             <div class="info-label">Your Emergency Contact</div>
-            <div class="info-value agent-phone">[YOUR PHONE NUMBER HERE]</div>
+            <div class="info-value agent-phone">[203-528-7496]</div>
         </div>
 
         <div class="divider"></div>
