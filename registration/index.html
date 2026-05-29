@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration — C. Massa</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --charcoal: #1e1e1e;
+            --charcoal-mid: #2a2a2a;
+            --charcoal-light: #363636;
+            --orange: #E8610A;
+            --orange-dim: rgba(232, 97, 10, 0.15);
+            --white: #f0ede8;
+            --muted: #888;
+            --subtle: #555;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: var(--charcoal);
+            color: var(--white);
+            font-family: 'DM Sans', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 24px 16px 48px;
+            position: relative;
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 0;
+        }
+        .top-bar { position: fixed; top: 0; left: 0; right: 0; height: 3px; background: var(--orange); z-index: 10; }
+        .back-link { position: relative; z-index: 1; width: 100%; max-width: 480px; margin-bottom: 20px; animation: rise 0.4s cubic-bezier(0.22, 1, 0.36, 1) both; }
+        .back-link a { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.15em; color: var(--muted); text-decoration: none; text-transform: uppercase; display: flex; align-items: center; gap: 6px; transition: color 0.15s; }
+        .back-link a:hover { color: var(--orange); }
+        .card { position: relative; z-index: 1; width: 100%; max-width: 480px; animation: rise 0.6s cubic-bezier(0.22, 1, 0.36, 1) both; }
+        @keyframes rise {
+            from { opacity: 0; transform: translateY(24px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .header { margin-bottom: 32px; padding-bottom: 24px; border-bottom: 1px solid var(--charcoal-light); }
+        .header-eyebrow { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.2em; color: var(--orange); text-transform: uppercase; margin-bottom: 10px; }
+        .header-name { font-family: 'Bebas Neue', sans-serif; font-size: 52px; letter-spacing: 0.04em; line-height: 1; }
+        .header-name span { color: var(--orange); }
+        .header-sub { font-size: 12px; color: var(--muted); margin-top: 6px; font-weight: 300; letter-spacing: 0.05em; }
+        .section { background: var(--charcoal-mid); border-radius: 10px; padding: 20px; margin-bottom: 12px; border: 1px solid var(--charcoal-light); }
+        .section-title { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.2em; color: var(--orange); text-transform: uppercase; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+        .section-title::after { content: ''; flex: 1; height: 1px; background: var(--charcoal-light); }
+        .field { display: flex; flex-direction: column; gap: 3px; margin-bottom: 14px; }
+        .field:last-child { margin-bottom: 0; }
+        .field-label { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--muted); letter-spacing: 0.15em; text-transform: uppercase; }
+        .field-value { font-size: 17px; font-weight: 500; color: var(--white); }
+        .field-value.mono { font-family: 'DM Mono', monospace; font-size: 15px; }
+        .field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .plate-block {
+            background: var(--orange-dim);
+            border: 1px solid rgba(232, 97, 10, 0.3);
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+        }
+        .plate-number {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 48px;
+            letter-spacing: 0.1em;
+            color: var(--white);
+            line-height: 1;
+        }
+        .plate-state {
+            font-family: 'DM Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 0.25em;
+            color: var(--orange);
+            text-transform: uppercase;
+            margin-top: 6px;
+        }
+        .vehicle-block { background: var(--charcoal-light); border-radius: 8px; padding: 16px; display: flex; align-items: center; gap: 14px; }
+        .vehicle-name { font-family: 'Bebas Neue', sans-serif; font-size: 26px; letter-spacing: 0.05em; line-height: 1; }
+        .vehicle-detail { font-size: 11px; color: var(--muted); margin-top: 3px; font-family: 'DM Mono', monospace; letter-spacing: 0.08em; }
+        .tbd-badge {
+            display: inline-block;
+            background: var(--charcoal-light);
+            border: 1px solid var(--subtle);
+            border-radius: 4px;
+            padding: 2px 8px;
+            font-family: 'DM Mono', monospace;
+            font-size: 11px;
+            color: var(--muted);
+            letter-spacing: 0.1em;
+        }
+        .footer { margin-top: 28px; text-align: center; font-family: 'DM Mono', monospace; font-size: 9px; color: var(--subtle); letter-spacing: 0.15em; text-transform: uppercase; line-height: 1.8; }
+        .forge-mark { color: var(--orange); opacity: 0.6; }
+    </style>
+</head>
+<body>
+    <div class="top-bar"></div>
+    <div class="back-link"><a href="../">← All Documents</a></div>
+    <div class="card">
+        <div class="header">
+            <div class="header-eyebrow">▶ Registration</div>
+            <div class="header-name">C. <span>Massa</span></div>
+            <div class="header-sub">State of Rhode Island · Backup reference</div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Plate</div>
+            <div class="plate-block">
+                <div class="plate-number">4G819</div>
+                <div class="plate-state">Rhode Island</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Vehicle</div>
+            <div class="vehicle-block">
+                <div style="font-size:28px;">🚗</div>
+                <div>
+                    <div class="vehicle-name">2026 Subaru WRX</div>
+                    <div class="vehicle-detail">World Rally Blue</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Registration Details</div>
+            <div class="field-grid">
+                <div class="field">
+                    <div class="field-label">Registered Owner</div>
+                    <div class="field-value">Christopher Massa</div>
+                </div>
+                <div class="field">
+                    <div class="field-label">State</div>
+                    <div class="field-value">Rhode Island</div>
+                </div>
+            </div>
+            <div class="field-grid" style="margin-top:14px;">
+                <div class="field">
+                    <div class="field-label">Expiration</div>
+                    <div class="field-value"><span class="tbd-badge">TBD</span></div>
+                </div>
+                <div class="field">
+                    <div class="field-label">Class</div>
+                    <div class="field-value mono" style="font-size:13px;">Passenger</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <div>Christopher Massa · Rhode Island DMV</div>
+            <div style="margin-top:10px;" class="forge-mark">▶▶▶ The Forge · Backup Reference Only ▶▶▶</div>
+        </div>
+    </div>
+</body>
+</html>
